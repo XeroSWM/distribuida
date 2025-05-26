@@ -23,6 +23,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no ec2-user@52.87.153.82 << 'EOF'
             cd /home/ec2-user/distribuida
             git pull origin main
+            python3 -m pip install --user -r requirements.txt
             pkill -f app.py || true    # Reinicia la app (ajusta si usas otro archivo o proceso)
             nohup python3 app.py &     # Ejecuta la app en segundo plano
           EOF
