@@ -3,17 +3,16 @@ name: Despliegue automático a EC2
 on:
   push:
     branches:
-      - main  # Cambia si usas otra rama
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Obtener código
+      - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Configurar SSH para EC2
+      - name: Configurar SSH
         uses: webfactory/ssh-agent@v0.8.1
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
