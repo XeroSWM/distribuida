@@ -1,0 +1,28 @@
+name: Despliegue automático a EC2
+
+on:
+  push:
+    branches:
+      - main  # Cambia si usas otra rama
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obtener código
+        uses: actions/checkout@v3
+
+      - name: Configurar SSH para EC2
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: Desplegar en EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ec2-user@54.208.83.189 << 'EOF'
+            cd /home/ec2-user/ci-test
+            git pull origin main
+            pkill -f app.py || true
+            nohup python3 app.py &
+          EOF
