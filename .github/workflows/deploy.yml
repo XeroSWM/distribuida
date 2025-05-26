@@ -19,8 +19,8 @@ jobs:
 
       - name: Desplegar en EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@54.208.83.189 << 'EOF'
-            cd /home/ec2-user/ci-test
+          ssh -o StrictHostKeyChecking=no ec2-user@52.87.153.82 << 'EOF'
+            cd /home/ec2-user/distribuida
             git pull origin main
             pkill -f app.py || true
             nohup python3 app.py &
