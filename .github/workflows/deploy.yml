@@ -23,6 +23,10 @@ jobs:
           ssh -o StrictHostKeyChecking=no ec2-user@100.26.213.92 << 'EOF'
             cd /home/ec2-user/distribuida
             git pull origin main
-            pkill -f "flask run" || true    # Reinicia la app (ajusta si usas otro archivo o proceso)
+
+            # Matar cualquier proceso Flask previo (o Gunicorn si lo usas)
+            pkill -f "flask run" || true
+
+            # Lanzar Flask en segundo plano correctamente
             nohup flask run --host=0.0.0.0 --port=5000 > flask.log 2>&1 &
           EOF
