@@ -3,17 +3,18 @@ name: Despliegue automático a EC2
 on:
   push:
     branches:
-      - main
+      - main  # Cambia si tu rama principal tiene otro nombre
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo
+      - name: Checkout código
         uses: actions/checkout@v3
 
       - name: Configurar SSH
-        uses: webfactory/ssh-agent@v0.8.0
+        uses: webfactory/ssh-agent@v0.8.1
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
@@ -22,6 +23,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no ec2-user@52.87.153.82 << 'EOF'
             cd /home/ec2-user/distribuida
             git pull origin main
-            pkill -f app.py || true
-            nohup python3 app.py &
+            pkill -f app.py || true    # Reinicia la app (ajusta si usas otro archivo o proceso)
+            nohup python3 app.py &     # Ejecuta la app en segundo plano
           EOF
