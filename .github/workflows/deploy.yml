@@ -20,7 +20,7 @@ jobs:
 
       - name: Desplegar en EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@54.173.58.169 << 'EOF'
+          ssh -o StrictHostKeyChecking=no ec2-user@3.83.18.233 << 'EOF'
             cd /home/ec2-user/distribuida
             git pull origin main
 
